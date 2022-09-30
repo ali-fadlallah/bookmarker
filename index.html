@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <title>BookMarker</title>
+
+</head>
+
+<body>
+
+  <section class="container py-5 text-muted">
+    <div>
+      <h2>Bookmarker</h2>
+    </div>
+    <hr>
+
+    <div class=" p-5">
+
+      <h3 class=" text-center">Bookmark your favorite sites</h3>
+
+      <form class="w-75 m-auto ">
+
+        <label class="my-3" for="sitename">Site Name</label>
+        <input class=" form-control " type="text" placeholder="Bookmarker name" id="sitename">
+        <div id="alertName" class=" alert alert-danger  mt-1 py-2 d-none">The site name is required >> hint: the
+          characters english only from 3 to 100 characters
+        </div>
+
+        <label class="my-3" for="siteurl">Site URL</label>
+        <input class=" form-control" type="text" placeholder="Website URL" id="siteurl">
+
+        <div id="alertUrl" class=" alert alert-danger mt-1 py-2 d-none">Invalid website >> hint like:
+          https://www.facebook.com or https://www.google.com.eg
+        </div>
+
+
+        <div id="alertAlreadyAdded" class=" alert alert-danger mt-1 py-2 d-none">This website url is already added</div>
+
+        
+        <button id="btnSubmitUrl" onclick="addURL()" type="button"
+          class="mt-4 button btn btn-outline-info me-3 d-inline-block">Submit</button>
+
+        <button id="btnSaveUpdates" onclick="saveUpdates()" type="button"
+          class="mt-4 button btn btn-outline-dark me-3 d-none">Save Updates</button>
+
+        <button onclick="clearForm()" type="button" class="mt-4 button btn btn-outline-danger">Clear form</button>
+
+      </form>
+
+      <input onkeyup="searchUrl()" class="form-control w-50 m-auto my-4 d-none" type="search"
+        placeholder="Search by name or link ..... " id="searchInput">
+
+      <div id="btnclearDatabase" class=" d-none d-flex justify-content-end align-items-end my-4">
+
+        <button type="button" class="btn btn-danger" onclick="clearDataBase()">Clear Database</button>
+      </div>
+
+      <table id="tableUrls"
+        class=" table table-striped-columns table-responsive table-bordered text-center my-3 d-none">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Bookmark Name</th>
+            <th>Bookmark URL</th>
+            <th>Edit URL</th>
+            <th>Open URL</th>
+            <th>Delete URL</th>
+            <th>Added at</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </div>
+    <hr>
+
+    <p class=" fs-6">© 2022 Bookmarker Inc.</p>
+  </section>
+
+  <script src="js/index.js"></script>
+</body>
+
+</html>
