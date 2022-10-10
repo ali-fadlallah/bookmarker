@@ -10,6 +10,7 @@ var alertUrl = document.getElementById("alertUrl");
 var alertAlreadyAdded = document.getElementById("alertAlreadyAdded");
 var localStorageName = "sharedData";
 var sitesList = [];
+var newSitesList = [];
 var currentIndex = 0;
 var regexUrlName = /^[a-zA-Z]{3,100}$/;
 var regexUrl = /^((http|https):\/\/)www\.([A-z]){3,20}\.[A-z]{2,4}(\.[A-z]{2})?$/;
@@ -47,7 +48,8 @@ function addURL() {
     }
 
 
-    if (checkAddedUrl()) {
+    checkAddedUrl();
+    if (newSitesList != undefined) {
 
       alertAlreadyAdded.classList.remove("d-none");
 
@@ -70,12 +72,12 @@ function displayUrls() {
 
   var temp = "";
 
-  for (var i = 0; i < sitesList.length; i++) {
+  sitesList.forEach((element, i) => {
 
     temp += `<tr>
     <td>`+ (i + 1) + `</td>
-    <td>`+ sitesList[i].siteName + `</td>
-    <td>`+ sitesList[i].siteUrl + `</td>
+    <td>`+ element.siteName + `</td>
+    <td>`+ element.siteUrl + `</td>
 
     <td><button class="btn btn-outline-warning" onclick="updateURL(`+ i + `)">Update</button>
     </td>    
@@ -86,10 +88,32 @@ function displayUrls() {
 
     <td><button class="btn btn-outline-danger" onclick="deleteUrl(`+ i + `)">Delete</button></td> 
 
-    <td>`+ sitesList[i].addedAt + `</td>
+    <td>`+ element.addedAt + `</td>
           
     </tr>`
-  };
+
+  });
+  
+  // for (var i = 0; i < sitesList.length; i++) {
+
+  //   temp += `<tr>
+  //   <td>`+ (i + 1) + `</td>
+  //   <td>`+ sitesList[i].siteName + `</td>
+  //   <td>`+ sitesList[i].siteUrl + `</td>
+
+  //   <td><button class="btn btn-outline-warning" onclick="updateURL(`+ i + `)">Update</button>
+  //   </td>    
+
+  //   <td>
+  //   <button class="btn btn-outline-info" onclick="openUrl(`+ i + `)">Open Url</button>
+  //   </td>    
+
+  //   <td><button class="btn btn-outline-danger" onclick="deleteUrl(`+ i + `)">Delete</button></td> 
+
+  //   <td>`+ sitesList[i].addedAt + `</td>
+
+  //   </tr>`
+  // };
 
   if (sitesList.length != 0) {
 
@@ -206,17 +230,17 @@ function searchUrl() {
 
   var temp = "";
 
-  for (var i = 0; i < sitesList.length; i++) {
+  sitesList.forEach((element, i) => {
 
     if (sitesList[i].siteName.toLowerCase().includes(searchWords) || sitesList[i].siteUrl.toLowerCase().includes(searchWords)) {
 
       temp += `<tr>
       <td>`+ (i + 1) + `</td>
 
-      <td>`+ sitesList[i].siteName.toLowerCase().replace(searchWords, "<span class='text-danger fw-bold'>" + searchWords + "</span>") + `</td>
+      <td>`+ element.siteName.toLowerCase().replace(searchWords, "<span class='text-danger fw-bold'>" + searchWords + "</span>") + `</td>
 
 
-      <td>`+ sitesList[i].siteUrl.toLowerCase().replace(searchWords, "<span class='text-danger fw-bold'>" + searchWords + "</span>") + `</td>
+      <td>`+ element.siteUrl.toLowerCase().replace(searchWords, "<span class='text-danger fw-bold'>" + searchWords + "</span>") + `</td>
   
       <td><button class="btn btn-outline-warning" onclick="updateURL(`+ i + `)">Update</button>
       </td>    
@@ -226,12 +250,40 @@ function searchUrl() {
       </td>    
   
       <td><button class="btn btn-outline-danger" onclick="deleteUrl(`+ i + `)">Delete</button></td>  
-      <td>`+ sitesList[i].addedAt + `</td>
+      <td>`+ element.addedAt + `</td>
 
       </tr>`
 
     }
-  };
+  });
+
+
+  // for (var i = 0; i < sitesList.length; i++) {
+
+  //   if (sitesList[i].siteName.toLowerCase().includes(searchWords) || sitesList[i].siteUrl.toLowerCase().includes(searchWords)) {
+
+  //     temp += `<tr>
+  //     <td>`+ (i + 1) + `</td>
+
+  //     <td>`+ sitesList[i].siteName.toLowerCase().replace(searchWords, "<span class='text-danger fw-bold'>" + searchWords + "</span>") + `</td>
+
+
+  //     <td>`+ sitesList[i].siteUrl.toLowerCase().replace(searchWords, "<span class='text-danger fw-bold'>" + searchWords + "</span>") + `</td>
+
+  //     <td><button class="btn btn-outline-warning" onclick="updateURL(`+ i + `)">Update</button>
+  //     </td>    
+
+  //     <td>
+  //     <button class="btn btn-outline-warning" onclick="openUrl(`+ i + `)">Open Url</button>
+  //     </td>    
+
+  //     <td><button class="btn btn-outline-danger" onclick="deleteUrl(`+ i + `)">Delete</button></td>  
+  //     <td>`+ sitesList[i].addedAt + `</td>
+
+  //     </tr>`
+
+  //   }
+  // };
 
   document.getElementById("tableBody").innerHTML = temp;
 
@@ -298,15 +350,21 @@ function checkAddedUrl() {
 
   var checkBySiteUrlInput = siteUrlInput.value.toLowerCase();
 
-  for (var i = 0; i < sitesList.length; i++) {
+  newSitesList = sitesList.find((sitesList) => {
 
-    if (sitesList[i].siteUrl.toLowerCase().includes(checkBySiteUrlInput)) {
+    return sitesList.siteUrl.toLowerCase() == checkBySiteUrlInput;
 
-      return true;
+  })
 
-    }
+  // for (var i = 0; i < sitesList.length; i++) {
 
-  };
+  //   if (sitesList[i].siteUrl.toLowerCase().includes(checkBySiteUrlInput)) {
+
+  //     return true;
+
+  //   }
+
+  // };
 
 
 }
